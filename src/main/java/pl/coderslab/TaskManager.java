@@ -155,7 +155,7 @@ public class TaskManager {
         try {
             Files.delete(filePath);
         } catch (IOException e) {
-            }
+        }
         Files.createFile(filePath);
         for (int i = 0; i < data.length; i++) {
             Files.writeString(filePath, Arrays.toString(data[i]).replace("[", "").replace("]", "") + "\n", StandardOpenOption.APPEND);
