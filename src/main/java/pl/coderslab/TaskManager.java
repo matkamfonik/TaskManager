@@ -9,9 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.DateFormat;
 import java.util.Arrays;
-import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 
 public class TaskManager {
@@ -26,32 +24,22 @@ public class TaskManager {
                 case "add":
                     data = Arrays.copyOf(data, data.length + 1);
                     data[data.length - 1] = newTask();
-                    option = getOption();
                     break;
                 case "remove":
-                    while (true) {
-                        try {
-                            data = ArrayUtils.remove(data, removeTaskNumber());
-                            break;
-                        } catch (IndexOutOfBoundsException e) {
-                            System.out.println("There is no task in selected position. Please check list and try again");
-                            break;
-                        }
+                    try {
+                        data = ArrayUtils.remove(data, removeTaskNumber());
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("There is no task in selected position. Please check list and try again");
                     }
-                    option = getOption();
                     break;
                 case "list":
                     printTasks(data);
-                    option = getOption();
-                    break;
-                case "exit":
-                    option = "exit";
                     break;
                 default:
                     System.out.println("INCORRECT INPUT!!!!!!!!");
-                    option = getOption();
                     break;
             }
+            option = getOption();
         }
         try {
             writeFile(filePath, data);
@@ -115,11 +103,11 @@ public class TaskManager {
                 System.out.println("Wrong format. Please type in date yyyy-mm-dd");
             }
         }
-        while (true) {
-            System.out.println("Is your task inportant? true/false");
-            String importenance = addTaskInput.nextLine();
-            if ("true".equals(importenance) || "false".equals(importenance)) {
-                newTask[2] = importenance;
+        while (true) {          //loop for wrong input
+            System.out.println("Is your task important? true/false");
+            String importance = addTaskInput.nextLine();
+            if ("true".equals(importance) || "false".equals(importance)) {
+                newTask[2] = importance;
                 break;
             } else {
                 System.out.println("Please type true or false");
